@@ -1,11 +1,11 @@
 import { FC } from "react";
-import Button from "components/atoms/button";
 import styles from "./app.module.css";
+import { ToggleButtonColor } from "components/atoms/buttons";
 
 const App: FC = (): JSX.Element => {
   return (
     <main className={styles.main}>
-      <Button />
+      <ToggleButtonColor />
     </main>
   );
 };
