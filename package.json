@@ -1,16 +1,16 @@
 {
-  "name": "vital",
-  "version": "1.0.0",
-  "description": "Starter template for Vite with React (TypeScript). Supports Tailwind with CSS-Modules. Jest and @react/testing-library configured and ready to go. Also ESLint, Prettier, Husky, Commit-lint and Atomic Design for components.",
-  "homepage": "https://github.com/jvidalv/vital#readme",
+  "name": "React TDD basics",
+  "version": "0.1.0",
+  "description": "",
+  "homepage": "https://github.com/*/*#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jvidalv/vital.git"
+    "url": "git+https://github.com/*/*.git"
   },
-  "author": "Josep Vidal <josepvidalvidal@gmail.com>",
-  "license": "MIT",
+  "author": "",
+  "license": "",
   "bugs": {
-    "url": "https://github.com/jvidalv/vital/issues"
+    "url": "https://github.com/*/*/issues"
   },
   "keywords": [
     "react",
@@ -39,40 +39,41 @@
     "start": "vite",
     "build": "vite build",
     "test": "jest",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "tsc": "tsc -p ."
   },
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@heroicons/react": "2.0.13"
+    "@heroicons/react": "2.0.16"
   },
   "devDependencies": {
-    "@types/jest": "29.2.5",
-    "@types/node": "18.11.18",
-    "@types/react": "18.0.26",
-    "@typescript-eslint/eslint-plugin": "5.48.1",
-    "@typescript-eslint/parser": "5.48.1",
-    "vite": "4.0.4",
+    "@types/jest": "29.4.0",
+    "@types/node": "18.14.0",
+    "@types/react": "18.0.28",
+    "@typescript-eslint/eslint-plugin": "5.53.0",
+    "@typescript-eslint/parser": "5.53.0",
+    "vite": "4.1.3",
     "vite-preset-react": "2.3.0",
-    "typescript": "4.9.4",
+    "typescript": "4.9.5",
     "postcss": "8.4.21",
-    "prettier": "2.8.2",
-    "lint-staged": "13.1.0",
+    "prettier": "2.8.4",
+    "lint-staged": "13.1.2",
     "husky": "8.0.3",
-    "tailwindcss": "3.2.4",
+    "tailwindcss": "3.2.7",
     "@tailwindcss/forms": "0.5.3",
-    "eslint": "8.31.0",
-    "eslint-plugin-import": "2.27.4",
-    "eslint-plugin-react": "7.32.0",
+    "eslint": "8.34.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "autoprefixer": "10.4.13",
-    "@commitlint/cli": "17.4.2",
-    "@commitlint/config-conventional": "17.4.2",
+    "@commitlint/cli": "17.4.4",
+    "@commitlint/config-conventional": "17.4.4",
     "ts-jest": "29.0.5",
-    "jest": "29.3.1",
-    "@testing-library/react": "13.4.0",
+    "jest": "29.4.3",
+    "@testing-library/react": "14.0.0",
     "@testing-library/jest-dom": "5.16.5",
-    "jest-environment-jsdom": "29.3.1",
+    "jest-environment-jsdom": "29.4.3",
     "identity-obj-proxy": "3.0.0"
   }
 }

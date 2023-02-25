@@ -129,13 +129,13 @@ const App = (): JSX.Element => {
       <section className={styles.copy}>
         <div className={styles.copyInner}>
           <a href="https://github.com/jvidalv/vital">
-            <Button>Visit on Github</Button>
+
           </a>
           <CopyButton text="npx degit jvidalv/vital my-app" />
         </div>
       </section>
       <section className={styles.features}>
-        {features.map((props, index) => (
+        {features.map((props: any, index) => (
           <div
             key={index}
             className={styles.cardWrapper}
