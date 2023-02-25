@@ -1,11 +1,11 @@
 import { FC } from "react";
 import styles from "./app.module.css";
-import { ToggleButtonColor } from "components/atoms/buttons";
+import { SummaryForm } from "components/molecules";
 
 const App: FC = (): JSX.Element => {
   return (
     <main className={styles.main}>
-      <ToggleButtonColor />
+      <SummaryForm />
     </main>
   );
 };

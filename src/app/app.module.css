@@ -1,3 +1,4 @@
+/*
 .main {
   @apply px-4 min-h-screen sm:px-0 space-y-16 w-full bg-gray-900;
   background-image: radial-gradient(hsla(0, 0%, 84.3%, 0.25) 1px, transparent 0),
@@ -81,4 +82,13 @@
 
 .footer {
   @apply pb-16 max-w-screen-lg xl:max-w-screen-xl mx-auto text-center sm:text-right text-gray-400 font-bold;
+}
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main {
+    @apply grid grid-cols-4 gap-4
 }

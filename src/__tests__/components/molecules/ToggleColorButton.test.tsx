@@ -17,7 +17,7 @@ describe("ToggleColorButton", () => {
     expect(button).toHaveClass("btn-bg-red");
   });
 
-  describe("tooggle color", () => {
+  describe("toggle color", () => {
     it("should toggle to a blue background when clicked", () => {
       render(<ToggleButtonColor />);
 
