@@ -2,4 +2,6 @@ node_modules
 .idea
 dist
 
+# YARN
 yarn.lock
+yarn-error.log
