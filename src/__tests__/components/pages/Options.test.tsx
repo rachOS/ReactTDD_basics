@@ -1,5 +1,5 @@
 import Options from "../../../components/organisms/Options";
-import { screen, render } from "@testing-library/react";
+import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 describe("ScoopOptions", () => {
@@ -8,12 +8,12 @@ describe("ScoopOptions", () => {
 
     // const user = userEvent.setup();
 
-    const scoopNames = await screen.findAllByRole("img");
+    const scoopNames = await waitFor(() => screen.findAllByRole("img"));
 
-    expect(scoopNames).toHaveLength(2);
+    await waitFor(() => expect(scoopNames).toHaveLength(2));
     /* expect(scoopNames.map((img) => img.getAttribute("alt"))).toEqual([
-                                                                                                       "Chocolate scoop",
-                                                                                                       "Vanilla scoop",
-                                                                                                     ]);*/
+    "Chocolate scoop",
+    "Vanilla scoop",
+    ]);*/
   });
 });

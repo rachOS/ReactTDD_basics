@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import ScoopOptions from "../organisms/ScoopOptions";
+import axios from "axios";
 
 type Props = {
   optionsType: string;
@@ -11,13 +12,8 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): any => {
 
   const get = useCallback(async () => {
     try {
-      const res = await fetch(`http://localhost:5173/${optionsType}`, {
-        method: "get",
-        headers: new Headers(),
-        mode: "cors",
-        cache: "default",
-      });
-      return await res.json();
+      const res = await axios.get(`http://localhost:5173/${optionsType}`);
+      return await res.data;
     } catch (e) {
       console.error(e);
     }
