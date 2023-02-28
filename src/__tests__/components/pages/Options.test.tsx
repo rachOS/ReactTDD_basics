@@ -1,6 +1,5 @@
 import Options from "../../../components/organisms/Options";
-import { screen, render, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { screen, render } from "@testing-library/react";
 
 describe("ScoopOptions", () => {
   it("should display name for each scoop", async () => {
