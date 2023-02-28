@@ -8,7 +8,7 @@ type Props = {
 
 type IMG = { name: string; path: string };
 const Options: FC<Props> = ({ optionsType = "scoops" }: Props): any => {
-  const [data, setData] = useState<Array<IMG>>([{ name: "", path: "" }]);
+  const [data, setData] = useState<Array<IMG>>([]);
 
   const get = useCallback(async () => {
     try {

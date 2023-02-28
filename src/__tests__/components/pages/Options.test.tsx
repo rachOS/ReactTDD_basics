@@ -6,14 +6,12 @@ describe("ScoopOptions", () => {
   it("should display name for each scoop", async () => {
     render(<Options optionsType={"scoops"} />);
 
-    // const user = userEvent.setup();
+    const scoopNames = await screen.findAllByRole("img");
 
-    const scoopNames = await waitFor(() => screen.findAllByRole("img"));
-
-    await waitFor(() => expect(scoopNames).toHaveLength(2));
-    /* expect(scoopNames.map((img) => img.getAttribute("alt"))).toEqual([
-    "Chocolate scoop",
-    "Vanilla scoop",
-    ]);*/
+    expect(scoopNames).toHaveLength(2);
+    expect(scoopNames.map((img) => img.getAttribute("alt"))).toEqual([
+      "Chocolate scoop",
+      "Vanilla scoop",
+    ]);
   });
 });
