@@ -8,7 +8,7 @@ type Props = {
 };
 
 const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
-  const [data, error] = useAxios<IMG>(optionsType);
+  const [data, error] = useAxios<IMG>(`http://localhost:5173/${optionsType}`);
 
   const ItemOptions = optionsType === "scoops" ? ScoopOptions : ToppingOptions;
 
