@@ -16,4 +16,23 @@ export const handlers = [
       ])
     );
   }),
+  rest.get("http://localhost:5173/toppings", (req, res, ctx) => {
+    return res(
+      ctx.delay(500),
+      ctx.json([
+        {
+          name: "Cherries",
+          path: "src/images/cherries.jpeg",
+        },
+        {
+          name: "M&Ms",
+          path: "src/images/m-and-m-s.jpeg",
+        },
+        {
+          name: "Hot fudge",
+          path: "src/images/hot-fudge.jpeg",
+        },
+      ])
+    );
+  }),
 ];
