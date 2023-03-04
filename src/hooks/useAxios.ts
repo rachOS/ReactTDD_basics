@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 export const useAxios = <Type = Array<unknown>>(
   optionsType: string
-): Array<Type>[] => {
+): [data: Array<Type>, error: boolean] => {
   const [data, setData] = useState<Array<Type>>([]);
+  const [error, setError] = useState<boolean>(false);
+
+  const get = useCallback(async () => {
+    try {
+      const response = await axios.get(`http://localhost:5173/${optionsType}`);
+      await setData(response.data);
+    } catch (e) {
+      setError(true);
+    }
+  }, [optionsType]);
 
   useEffect(() => {
-    try {
-      axios
-        .get(`http://localhost:5173/${optionsType}`)
-        .then((r): void => setData(r.data));
-    } catch (e) {
-      console.error(e);
-    }
-  }, []);
+    get().then((r): void => r);
+  }, [get]);
 
-  return [data];
+  return [data, error];
 };

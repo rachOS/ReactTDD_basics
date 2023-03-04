@@ -1,26 +1,32 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import ScoopOptions from "../organisms/ScoopOptions";
-import {useAxios} from "hooks/useAxios";
-import ToppingOptions from "components/organisms/ToppingOptions";
+import { useAxios } from "hooks/useAxios";
+import ToppingOptions from "../organisms/ToppingOptions";
 
 type Props = {
   optionsType: string;
 };
 
-const Options: FC<Props> = ({optionsType = "scoops"}: Props): JSX.Element => {
-  const [data] = useAxios<IMG>(optionsType);
+const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
+  const [data, error] = useAxios<IMG>(optionsType);
 
   const ItemOptions = optionsType === "scoops" ? ScoopOptions : ToppingOptions;
 
-  return (
+  if (error) {
+    return (
+      <img onLoad={() => alert("there is an error")} alt={"alert error"} />
+    );
+  } else {
+    return (
       <div>
         {data.map(
-            ({name, path}: IMG): JSX.Element => (
-                <ItemOptions key={name} name={name} path={path}/>
-            )
+          ({ name, path }: IMG): JSX.Element => (
+            <ItemOptions key={name} name={name} path={path} />
+          )
         )}
       </div>
-  );
+    );
+  }
 };
 
 export default Options;

@@ -1,5 +1,5 @@
 import Options from "../../../components/organisms/Options";
-import { screen, render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 describe("ScoopOptions", () => {
   it("should display name for each scoop", async () => {
