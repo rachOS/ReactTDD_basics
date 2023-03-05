@@ -89,6 +89,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.main {
+main {
     @apply grid grid-cols-4 gap-4
 }

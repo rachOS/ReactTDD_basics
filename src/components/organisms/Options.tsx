@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, useCallback, useState } from "react";
 import ScoopOptions from "../organisms/ScoopOptions";
 import { useAxios } from "hooks/useAxios";
 import ToppingOptions from "../organisms/ToppingOptions";
+import "./style.module.css";
 
 type Props = {
   optionsType: string;
@@ -26,7 +27,9 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
     <div>
       <span>Scoops total : ${(parseInt(scoopsTotal) * 2).toFixed(2)}</span>
       {error ? (
-        <div role={"alert"}>{error.message}</div>
+        <div className={"bg-red-600"} role={"alert"}>
+          {error.message}
+        </div>
       ) : (
         data?.map(
           ({ name, path }: IMG): JSX.Element => (
