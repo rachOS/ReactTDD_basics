@@ -12,21 +12,19 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
 
   const ItemOptions = optionsType === "scoops" ? ScoopOptions : ToppingOptions;
 
-  if (error) {
-    return (
-      <img onLoad={() => alert("there is an error")} alt={"alert error"} />
-    );
-  } else {
-    return (
-      <div>
-        {data.map(
+  return (
+    <>
+      {error ? (
+        <div role={"alert"}>{error.message}</div>
+      ) : (
+        data?.map(
           ({ name, path }: IMG): JSX.Element => (
             <ItemOptions key={name} name={name} path={path} />
           )
-        )}
-      </div>
-    );
-  }
+        )
+      )}
+    </>
+  );
 };
 
 export default Options;

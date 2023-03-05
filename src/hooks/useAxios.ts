@@ -1,24 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
 
 export const useAxios = <Type = Array<unknown>>(
   url: string
-): [data: Array<Type>, error: boolean] => {
+): [data: Array<Type>, error: AxiosError | null] => {
   const [data, setData] = useState<Array<Type>>([]);
-  const [error, setError] = useState<boolean>(false);
-
-  const getData = useCallback(async (): Promise<void> => {
-    try {
-      const response = await axios.get(url);
-      await setData(response.data);
-    } catch (e) {
-      setError(true);
-    }
-  }, [url]);
+  const [error, setError] = useState<AxiosError | null>(null);
 
   useEffect(() => {
-    getData().then((r): void => r);
-  }, [getData]);
+    axios
+      .get(url)
+      .then((r): void => {
+        setData(r.data);
+      })
+      .catch((e) => setError(e));
+  }, [url]);
 
   return [data, error];
 };

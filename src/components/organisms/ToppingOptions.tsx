@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import React from "react";
 
 type Props = {
   name: string;
   path: string;
 };
 
-const ToppingOptions: FC<Props> = ({ name, path }: Props): JSX.Element => {
+const ToppingOptions = ({ name, path }: Props) => {
   return <img key={name} alt={`${name} topping`} src={path} />;
 };
 
