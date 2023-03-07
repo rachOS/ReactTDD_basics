@@ -23,7 +23,7 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
 
   return (
     <div>
-      <span>Scoops total : ${scoopsTotal}</span>
+      <span>Scoops total : ${(parseInt(scoopsTotal) * 2).toFixed(2)}</span>
       {error ? (
         <div role={"alert"}>{error.message}</div>
       ) : (

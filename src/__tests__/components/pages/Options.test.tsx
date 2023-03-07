@@ -50,14 +50,13 @@ describe("Scoopp quantity and selected toppings", () => {
     await user.type(chocolateInput, "1");
     expect(scoopsTotal).toHaveTextContent("2.00");
 
-    //
-    // const vanillaInput = await screen.findByRole("spinbutton", {
-    //   name: /Vanilla/i,
-    // });
-    //
-    // await user.clear(vanillaInput);
-    // await user.type(vanillaInput, "1");
-    //
-    // await expect(scoopsTotal).toHaveTextContent("6.00");
+    const vanillaInput = await screen.findByRole("spinbutton", {
+      name: /Vanilla/i,
+    });
+
+    await user.clear(vanillaInput);
+    await user.type(vanillaInput, "1");
+
+    await expect(scoopsTotal).toHaveTextContent("4.00");
   });
 });
