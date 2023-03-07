@@ -1,5 +1,7 @@
 import Options from "../../../components/organisms/Options";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import OrderEntry from "components/organisms/OrderEntry";
+import userEvent from "@testing-library/user-event";
 
 describe("ScoopOptions", () => {
   it("should display name for each scoop", async () => {
@@ -27,5 +29,35 @@ describe("ToppingOptions", () => {
       "M&Ms topping",
       "Hot fudge topping",
     ]);
+  });
+});
+
+describe("Scoopp quantity and selected toppings", () => {
+  it("should update the subtotal when scoop option quantity is updated", async () => {
+    const user = userEvent.setup();
+    render(<Options optionsType={"scoops"} />);
+
+    const scoopsTotal = screen.getByText(/Scoops total : \$/i, {
+      exact: false,
+    });
+    expect(scoopsTotal).toHaveTextContent("0.00");
+
+    const chocolateInput = await screen.findByRole("spinbutton", {
+      name: /Chocolate/i,
+    });
+
+    await user.clear(chocolateInput);
+    await user.type(chocolateInput, "1");
+    expect(scoopsTotal).toHaveTextContent("2.00");
+
+    //
+    // const vanillaInput = await screen.findByRole("spinbutton", {
+    //   name: /Vanilla/i,
+    // });
+    //
+    // await user.clear(vanillaInput);
+    // await user.type(vanillaInput, "1");
+    //
+    // await expect(scoopsTotal).toHaveTextContent("6.00");
   });
 });

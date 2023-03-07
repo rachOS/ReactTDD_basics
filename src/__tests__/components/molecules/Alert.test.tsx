@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import Scoops from "components/organisms/Scoops";
+import OrderEntry from "components/organisms/OrderEntry";
 import { server } from "../../../mocks/server";
 import { rest } from "msw";
 
@@ -13,7 +13,7 @@ describe("Alert", () => {
         return res(ctx.status(500));
       })
     );
-    render(<Scoops />);
+    render(<OrderEntry />);
 
     waitFor(async () => {
       const alerts = await screen.findAllByRole("alert", {

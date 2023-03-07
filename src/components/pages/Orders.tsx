@@ -1,5 +1,5 @@
 import React from "react";
-import Scoops from "components/organisms/Scoops";
+import OrderEntry from "components/organisms/OrderEntry";
 
 type Props = {
   type: any;
@@ -9,7 +9,7 @@ const Orders: React.FC<Props> = ({ type }: Props): JSX.Element => {
   return (
     <>
       <h1>Orders</h1>
-      <Scoops />
+      <OrderEntry />
     </>
   );
 };
