@@ -13,8 +13,9 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
 
   const handleChange = useCallback(
     ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-      console.log("-> value", value);
-      setScoopsTotal(value);
+      setScoopsTotal((prevState) =>
+        (Number(prevState) + Number(value)).toString()
+      );
     },
     []
   );
