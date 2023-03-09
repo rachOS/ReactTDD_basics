@@ -11,25 +11,37 @@ type Props = {
 const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
   const [data, error] = useAxios<IMG>(`http://localhost:5173/${optionsType}`);
   const [scoopsTotal, setScoopsTotal] = useState<string>("0.00");
+  const [toppingsTotal, setToppingsTotal] = useState<string>("0.00");
+  const isScoops = optionsType === "scoops";
 
   const handleChange = useCallback(
     ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-      setScoopsTotal((prevState) =>
+      if (isScoops) {
+        setScoopsTotal((prevState) =>
+          (Number(prevState) + Number(value)).toString()
+        );
+      }
+
+      setToppingsTotal((prevState) =>
         (Number(prevState) + Number(value)).toString()
       );
     },
-    []
+    [isScoops]
   );
 
-  const ItemOptions = optionsType === "scoops" ? ScoopOptions : ToppingOptions;
+  const ItemOptions = isScoops ? ScoopOptions : ToppingOptions;
 
   return (
     <div>
-      <span>Scoops total : ${(parseInt(scoopsTotal) * 2).toFixed(2)}</span>
+      {isScoops ? (
+        <span>Scoops total : ${(parseInt(scoopsTotal) * 2).toFixed(2)}</span>
+      ) : (
+        <span>
+          Toppings total : ${(parseInt(toppingsTotal) * 1.5).toFixed(2)}
+        </span>
+      )}
       {error ? (
-        <div className={"bg-red-600"} role={"alert"}>
-          {error.message}
-        </div>
+        <div role={"alert"}>{error.message}</div>
       ) : (
         data?.map(
           ({ name, path }: IMG): JSX.Element => (

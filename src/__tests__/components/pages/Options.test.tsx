@@ -1,6 +1,5 @@
 import Options from "../../../components/organisms/Options";
-import { render, screen, waitFor } from "@testing-library/react";
-import OrderEntry from "components/organisms/OrderEntry";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 describe("ScoopOptions", () => {
@@ -62,5 +61,9 @@ describe("Scoopp quantity and selected toppings", () => {
     await user.clear(chocolateInput);
     await user.type(chocolateInput, "2");
     expect(scoopsTotal).toHaveTextContent("8.00");
+
+    await user.clear(chocolateInput);
+    await user.type(chocolateInput, "1");
+    expect(scoopsTotal).toHaveTextContent("6.00");
   });
 });
