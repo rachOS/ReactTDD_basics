@@ -60,10 +60,20 @@ describe("Scoopp quantity and selected toppings", () => {
 
     await user.clear(chocolateInput);
     await user.type(chocolateInput, "2");
-    expect(scoopsTotal).toHaveTextContent("8.00");
+
+    expect(scoopsTotal).toHaveTextContent("6.00");
 
     await user.clear(chocolateInput);
     await user.type(chocolateInput, "1");
-    expect(scoopsTotal).toHaveTextContent("6.00");
+    expect(scoopsTotal).toHaveTextContent("4.00");
+
+    await user.clear(vanillaInput);
+    await user.type(vanillaInput, "0");
+
+    await expect(scoopsTotal).toHaveTextContent("2.00");
+
+    await user.clear(chocolateInput);
+    await user.type(chocolateInput, "0");
+    expect(scoopsTotal).toHaveTextContent("0.00");
   });
 });

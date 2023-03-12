@@ -18,9 +18,11 @@ const ScoopOptions: FC<Props> = ({
         {name}
         <input
           id={name}
+          name={name}
           type={"number"}
           onChange={handleChange}
           defaultValue={0}
+          min={0}
         />
       </label>
     </>

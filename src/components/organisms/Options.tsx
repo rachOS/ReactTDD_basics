@@ -10,16 +10,20 @@ type Props = {
 
 const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
   const [data, error] = useAxios<IMG>(`http://localhost:5173/${optionsType}`);
-  const [scoopsTotal, setScoopsTotal] = useState<string>("0.00");
+  const [scoops, setScoops] = useState<Map<string, string>>(new Map());
+  const r: any[] = [];
+  scoops.forEach((v, k) => {
+    r.push(Number(v));
+  });
+
   const [toppingsTotal, setToppingsTotal] = useState<string>("0.00");
   const isScoops = optionsType === "scoops";
+  const price: any = { scoops: 2.0, toppings: 1.5 };
 
   const handleChange = useCallback(
-    ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    ({ target: { name, value } }: ChangeEvent<HTMLInputElement>) => {
       if (isScoops) {
-        setScoopsTotal((prevState) =>
-          (Number(prevState) + Number(value)).toString()
-        );
+        setScoops((prev) => prev.set(name, value));
       }
 
       setToppingsTotal((prevState) =>
@@ -30,11 +34,16 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
   );
 
   const ItemOptions = isScoops ? ScoopOptions : ToppingOptions;
+  const w =
+    r.reduce((a, b) => {
+      console.log("-> a + b", { a, b });
+      return a + b;
+    }, 0) * price[optionsType];
 
   return (
     <div>
       {isScoops ? (
-        <span>Scoops total : ${(parseInt(scoopsTotal) * 2).toFixed(2)}</span>
+        <span>Scoops total : ${w.toFixed(2).toString()}</span>
       ) : (
         <span>
           Toppings total : ${(parseInt(toppingsTotal) * 1.5).toFixed(2)}
