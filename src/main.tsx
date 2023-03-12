@@ -20,9 +20,9 @@ if (import.meta.env.MODE === "development") {
     .then(() => {
       // Render the application.
       root.render(
-        <StrictMode>
-          <App />
-        </StrictMode>
+        // <StrictMode>
+        <App />
+        // </StrictMode>
       );
     })
     .catch((e) => console.error("Render the application", e));
