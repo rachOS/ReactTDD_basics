@@ -9,6 +9,7 @@ type Props = {
 };
 
 const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
+  // const {} = useOrderDetailsContext();
   const [data, error] = useAxios<IMG>(`http://localhost:5173/${optionsType}`);
   const [scoops, setScoops] = useState<Map<string, number>>(new Map());
   const price: any = useMemo(() => ({ scoops: 2.0, toppings: 1.5 }), []);
@@ -35,21 +36,25 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
 
   const calcScoopTotal = useCallback((): number => {
     const tmp: Array<number> = [];
-    scoops.forEach((v, k) => {
-      // console.log("-> v", { v, k });
+    scoops.forEach((v: number): void => {
       tmp.push(v);
     });
-    /*console.log("-> tmp", {
-                      tmp,
-                      reduce: tmp.reduce((a, b) => a + b, 0) * price[optionsType],
-                    });*/
+
     return tmp.reduce((a, b) => a + b, 0) * price[optionsType];
   }, [price, optionsType, scoops]);
+
+  const formatCurrencyHelper = (currency: number | bigint) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(currency);
+  };
 
   return (
     <div>
       {isScoops ? (
-        <span>Scoops total : ${calcScoopTotal().toFixed(2)}</span>
+        <span>Scoops total : ${formatCurrencyHelper(calcScoopTotal())}</span>
       ) : (
         <span>
           Toppings total : ${(parseInt(toppingsTotal) * 1.5).toFixed(2)}

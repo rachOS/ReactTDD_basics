@@ -1,5 +1,5 @@
 import Options from "../../../components/organisms/Options";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "../../../testing-library-utils";
 import userEvent from "@testing-library/user-event";
 
 describe("ScoopOptions", () => {
@@ -69,8 +69,16 @@ describe("Scoopp quantity and selected toppings", () => {
     await user.type(vanillaInput, "0");
     await expect(scoopsTotal).toHaveTextContent("2.00");
 
-    await user.clear(chocolateInput);
-    await user.type(chocolateInput, "0");
-    expect(scoopsTotal).toHaveTextContent("0.00");
+    const extracted = async (
+      element: HTMLElement,
+      value: string,
+      expected: string
+    ) => {
+      await user.clear(element);
+      await user.type(element, value);
+      expect(scoopsTotal).toHaveTextContent(expected);
+    };
+
+    await extracted(chocolateInput, "0", "0.00");
   });
 });
