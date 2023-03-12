@@ -3,21 +3,22 @@ import ScoopOptions from "../organisms/ScoopOptions";
 import { useAxios } from "hooks/useAxios";
 import ToppingOptions from "../organisms/ToppingOptions";
 import "./style.module.css";
+import { useOrderDetailsContext } from "../../contexts/ordersContext";
 
 type Props = {
   optionsType: string;
 };
 
 const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
-  // const {} = useOrderDetailsContext();
+  const { prices } = useOrderDetailsContext();
   const [data, error] = useAxios<IMG>(`http://localhost:5173/${optionsType}`);
   const [scoops, setScoops] = useState<Map<string, number>>(new Map());
-  const price: any = useMemo(() => ({ scoops: 2.0, toppings: 1.5 }), []);
 
   const [toppingsTotal, setToppingsTotal] = useState<string>("0.00");
   const isScoops = optionsType === "scoops";
 
   const [form, setForm] = useState<{ [key: string]: string }>({});
+
   const handleChange = useCallback(
     ({ target: { name, value } }: ChangeEvent<HTMLInputElement>) => {
       if (isScoops) {
@@ -29,7 +30,7 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
         (Number(prevState) + Number(value)).toString()
       );
     },
-    [isScoops, price, optionsType]
+    [isScoops, prices, optionsType]
   );
 
   const ItemOptions = isScoops ? ScoopOptions : ToppingOptions;
@@ -40,8 +41,8 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
       tmp.push(v);
     });
 
-    return tmp.reduce((a, b) => a + b, 0) * price[optionsType];
-  }, [price, optionsType, scoops]);
+    return tmp.reduce((a, b) => a + b, 0) * prices[optionsType];
+  }, [prices, optionsType, scoops]);
 
   const formatCurrencyHelper = (currency: number | bigint) => {
     return new Intl.NumberFormat("en-US", {

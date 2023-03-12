@@ -1,6 +1,21 @@
-import { createContext, ReactNode, useContext, useMemo } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
-const OrderDetailsContext = createContext({});
+const OrderDetailsContext: React.Context<{
+  handleUpdateForm: (name: string, value: string) => void;
+  form: { [key: string]: string };
+  prices: { [key: string]: number };
+}> = createContext({
+  form: {},
+  prices: {},
+  handleUpdateForm: (name: string, value: string) =>
+    console.info({ name, value }),
+});
 
 export const useOrderDetailsContext = () => {
   const context = useContext(OrderDetailsContext);
@@ -13,7 +28,18 @@ export const useOrderDetailsContext = () => {
 };
 
 export const OrderDetailsProvider = ({ children }: { children: ReactNode }) => {
-  const values = useMemo(() => ({}), []);
+  const [form, setForm] = useState<{ [key: string]: string }>({});
+  const handleUpdateForm = (name: string, value: string) =>
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+
+  const values = useMemo(
+    () => ({
+      form,
+      prices: { scoops: 2.0, toppings: 1.5 },
+      handleUpdateForm,
+    }),
+    []
+  );
   return (
     <OrderDetailsContext.Provider value={values}>
       {children}
