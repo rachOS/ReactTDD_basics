@@ -1,36 +1,44 @@
-import React, { ChangeEvent, FC, useCallback, useMemo, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import ScoopOptions from "../organisms/ScoopOptions";
-import { useAxios } from "hooks/useAxios";
+import {useAxios} from "hooks/useAxios";
 import ToppingOptions from "../organisms/ToppingOptions";
 import "./style.module.css";
-import { useOrderDetailsContext } from "../../contexts/ordersContext";
+import {useOrderDetailsContext} from "../../contexts/ordersContext";
 
 type Props = {
   optionsType: string;
 };
 
-const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
-  const { prices } = useOrderDetailsContext();
+const Options: FC<Props> = ({optionsType = "scoops"}: Props): JSX.Element => {
   const [data, error] = useAxios<IMG>(`http://localhost:5173/${optionsType}`);
   const [scoops, setScoops] = useState<Map<string, number>>(new Map());
-
   const [toppingsTotal, setToppingsTotal] = useState<string>("0.00");
-  const isScoops = optionsType === "scoops";
-
   const [form, setForm] = useState<{ [key: string]: string }>({});
 
-  const handleChange = useCallback(
-    ({ target: { name, value } }: ChangeEvent<HTMLInputElement>) => {
-      if (isScoops) {
-        setForm((prevForm) => ({ ...prevForm, [name]: value }));
-        setScoops((prevScoops) => prevScoops.set(name, Number(value)));
-      }
+  const {prices, handleSetTotal} = useOrderDetailsContext();
 
-      setToppingsTotal((prevState) =>
-        (Number(prevState) + Number(value)).toString()
-      );
-    },
-    [isScoops, prices, optionsType]
+  const isScoops = optionsType === "scoops";
+
+  const handleChange = useCallback(
+      ({target: {name, value}}: ChangeEvent<HTMLInputElement>) => {
+        setForm((prevForm) => ({...prevForm, [name]: value}));
+
+        if (isScoops) {
+          setScoops((prevScoops) => prevScoops.set(name, Number(value)));
+        }
+
+        setToppingsTotal((prevState) =>
+            (Number(prevState) + Number(value)).toString()
+        );
+      },
+      [isScoops, prices]
   );
 
   const ItemOptions = isScoops ? ScoopOptions : ToppingOptions;
@@ -52,31 +60,29 @@ const Options: FC<Props> = ({ optionsType = "scoops" }: Props): JSX.Element => {
     }).format(currency);
   };
 
+  useEffect(
+      () => handleSetTotal("scoops", formatCurrencyHelper(calcScoopTotal())),
+      [calcScoopTotal, form]
+  );
+
   return (
-    <div>
-      {isScoops ? (
-        <span>Scoops total : ${formatCurrencyHelper(calcScoopTotal())}</span>
-      ) : (
-        <span>
-          Toppings total : ${(parseInt(toppingsTotal) * 1.5).toFixed(2)}
-        </span>
-      )}
-      {error ? (
-        <div role={"alert"}>{error.message}</div>
-      ) : (
-        data?.map(
-          ({ name, path }: IMG): JSX.Element => (
-            <ItemOptions
-              key={name}
-              name={name}
-              path={path}
-              handleChange={handleChange}
-              value={form[name]}
-            />
-          )
-        )
-      )}
-    </div>
+      <div>
+        {error ? (
+            <div role={"alert"}>{error.message}</div>
+        ) : (
+            data?.map(
+                ({name, path}: IMG): JSX.Element => (
+                    <ItemOptions
+                        key={name}
+                        name={name}
+                        path={path}
+                        handleChange={handleChange}
+                        value={form[name]}
+                    />
+                )
+            )
+        )}
+      </div>
   );
 };
 

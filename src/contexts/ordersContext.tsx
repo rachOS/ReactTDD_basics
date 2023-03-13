@@ -7,14 +7,17 @@ import React, {
 } from "react";
 
 const OrderDetailsContext: React.Context<{
-  handleUpdateForm: (name: string, value: string) => void;
-  form: { [key: string]: string };
-  prices: { [key: string]: number };
+  total: { scoops: string; toppings: string; grandTotal: string };
+  prices: any;
+  handleSetTotal(key: "scoops" | "toppings", price: string): void;
 }> = createContext({
-  form: {},
-  prices: {},
-  handleUpdateForm: (name: string, value: string) =>
-    console.info({ name, value }),
+  total: {
+    scoops: "0.00",
+    toppings: "0.00",
+    grandTotal: "0.00",
+  },
+  prices: { scoops: "2.0", toppings: "1.5" },
+  handleSetTotal: (key: "scoops" | "toppings", price: string) => {},
 });
 
 export const useOrderDetailsContext = () => {
@@ -27,19 +30,35 @@ export const useOrderDetailsContext = () => {
   return context;
 };
 
+const prices: { scoops: string; toppings: string } = {
+  scoops: "2.0",
+  toppings: "1.5",
+};
 export const OrderDetailsProvider = ({ children }: { children: ReactNode }) => {
-  const [form, setForm] = useState<{ [key: string]: string }>({});
-  const handleUpdateForm = (name: string, value: string) =>
-    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  const [total, setTotal] = useState<{
+    scoops: string;
+    toppings: string;
+    grandTotal: string;
+  }>({
+    scoops: "0.00",
+    toppings: "0.00",
+    grandTotal: "0.00",
+  });
+
+  const handleSetTotal = (key: "scoops" | "toppings", price: string): void => {
+    console.log("-> handleSetTotal ", { key, price });
+    setTotal((prevState) => ({ ...prevState, [key]: price }));
+  };
 
   const values = useMemo(
     () => ({
-      form,
-      prices: { scoops: 2.0, toppings: 1.5 },
-      handleUpdateForm,
+      total,
+      prices,
+      handleSetTotal,
     }),
-    []
+    [total]
   );
+
   return (
     <OrderDetailsContext.Provider value={values}>
       {children}

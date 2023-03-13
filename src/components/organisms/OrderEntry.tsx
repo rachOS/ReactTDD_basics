@@ -1,30 +1,40 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import Options from "components/organisms/Options";
-import {OrderDetailsProvider} from "../../contexts/ordersContext";
+import {
+  OrderDetailsProvider,
+  useOrderDetailsContext,
+} from "../../contexts/ordersContext";
 
 const OrderEntry: FC = (): JSX.Element => {
-    return (
+  const { total, prices } = useOrderDetailsContext();
+  return (
+    <div>
+      <header>
+        <h1 style={{ fontWeight: 700, fontStyle: "italic", fontSize: "2em" }}>
+          Design Sour Sundae
+        </h1>
+        <h2>Grand total : {`${total.scoops}`}</h2>
+      </header>
+      <section>
         <div>
-            <h1>Design Sour Sundae</h1>
-            <OrderDetailsProvider>
-                <div>
-                    <h1>Scoops</h1>
-                    <span>$2.00 each</span>
-
-                    <Options optionsType={"scoops"}/>
-                </div>
-                <div>
-                    <h1>Toppings</h1>
-                    <span>1,50 each</span>
-                    <span>Scoop total : $4.50</span>
-                    <Options optionsType={"toppings"}/>
-                </div>
-                <div>
-                    <h2>Grand total : $10,50</h2>
-                </div>
-            </OrderDetailsProvider>
+          <h2 style={{ fontWeight: 700 }}>Scoops: ${prices.scoops} each</h2>
+          <h3 style={{ fontWeight: 300, color: "red" }}>
+            Scoops total : {total.scoops}
+          </h3>
         </div>
-    );
+        <Options optionsType={"scoops"} />
+      </section>
+      <section>
+        <div>
+          <h2 style={{ fontWeight: 700 }}>Toppings: ${prices.toppings} each</h2>
+          <h3 style={{ fontWeight: 300, color: "red" }}>
+            Toppings total : $4.50
+          </h3>
+        </div>
+        <Options optionsType={"toppings"} />
+      </section>
+    </div>
+  );
 };
 
 export default OrderEntry;

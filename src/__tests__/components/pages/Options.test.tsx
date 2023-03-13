@@ -1,6 +1,7 @@
 import Options from "../../../components/organisms/Options";
 import { render, screen } from "../../../testing-library-utils";
 import userEvent from "@testing-library/user-event";
+import OrderEntry from "components/organisms/OrderEntry";
 
 describe("ScoopOptions", () => {
   it("should display name for each scoop", async () => {
@@ -34,7 +35,7 @@ describe("ToppingOptions", () => {
 describe("Scoopp quantity and selected toppings", () => {
   it("should update the subtotal when scoop option quantity is updated", async () => {
     const user = userEvent.setup();
-    render(<Options optionsType={"scoops"} />);
+    render(<OrderEntry />);
 
     const scoopsTotal = screen.getByText(/Scoops total : \$/i, {
       exact: false,
